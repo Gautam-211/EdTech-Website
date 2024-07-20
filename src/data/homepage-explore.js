@@ -69,7 +69,7 @@ export const HomePageExplore = [
         ]
     },
     {
-        tag: 'Skills paths',
+        tag: 'Skill paths',
         courses : [
             {
                 heading : "Flask",

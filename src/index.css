@@ -6,6 +6,10 @@ html,body{
     overflow-x: hidden;
 }
 
+.homepage_bg{
+  background-image: url("./assets/Images/bghome.svg");
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {

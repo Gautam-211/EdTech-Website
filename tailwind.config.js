@@ -129,6 +129,10 @@ module.exports = {
         maxContent: "1260px",
         maxContentTab: "650px"
       },
+      screens:{
+        'max-sm':{'max':'768px'},
+        'max-md':{'max':'640'}
+      }
     },
   },
   plugins: [],

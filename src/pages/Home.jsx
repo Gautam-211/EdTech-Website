@@ -5,13 +5,18 @@ import CTAButton from '../components/core/homepage/CTAButton'
 import HighlightText from '../components/core/homepage/HighlightText'
 import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from '../components/core/homepage/CodeBlocks'
+import TimeLineSection from '../components/core/homepage/TimeLineSection'
+import LearningLanguageSection from '../components/core/homepage/LearningLanguageSection'
+import InstructorSection from '../components/core/homepage/InstructorSection'
+import Footer from "../components/common/Footer"
+import ExploreMore from '../components/core/homepage/ExploreMore'
 
 const Home = () => {
   return (
-    <div className='w-11/12 flex flex-col '>
+    <div className='flex flex-col w-full'>
         {/* Section-1 */}
         
-        <div className='max-w-maxContent relative mx-auto flex flex-col w-full items-center text-white justify-between'>
+        <div className='max-w-maxContent relative mx-auto flex flex-col w-11/12 items-center text-white justify-between'>
 
             <Link to={"/signup"}>
                 <div className='group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-300 transition-all duration-200
@@ -81,7 +86,7 @@ const Home = () => {
                             active:false
                         }
                     }
-                    codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav>\n<a href="/one">One</a>\n<a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>\n</body>`}
+                    codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>MyPage</title>\n</head>\n<body>\n<h1>Hello</h1>\n<nav>\n<a href="/one">One</a>\n<a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>\n</body>`}
 
                     codeColor={"text-yellow-25"}
 
@@ -91,7 +96,7 @@ const Home = () => {
 
             {/* Code Section -2  */}
 
-            <div className='w-full'>
+            <div className='w-full mb-32'>
                 <CodeBlocks 
                     position={"md:flex-row-reverse"}
                     heading={
@@ -117,7 +122,7 @@ const Home = () => {
                             active:false
                         }
                     }
-                    codeblock={`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Basic HTML Example</title>\n</head>\n<body>\n<h1>Hello everyone</h1>\n<h2>Welcome to My Website</h2>\n<p>This is a basic example of an HTML document.</p>\n</body>\n</html>`}
+                    codeblock={`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>World</title>\n</head>\n<body>\n<h1>Hello everyone</h1>\n<h2>My Website</h2>\n<p>This is a basic example of an HTML document.</p>\n</body>\n</html>`}
 
                     codeColor={"text-white"}
 
@@ -125,13 +130,79 @@ const Home = () => {
                 />
             </div>
 
+            <ExploreMore/>
+
         </div>
 
         {/* Section-2  */}
 
-        <div className='bg-pure-gray-'>
+        <div className='bg-pure-greys-5 text-richblack-700 pb-[5rem]'>
+            
+            <div className='homepage_bg h-[333px]'>
+
+                    <div className='w-11/12 max-w-maxContent flex items-center gap-5 mx-auto'>
+
+                            <div className='flex gap-7 text-white justify-center w-full mt-[150px]'>
+
+                                <CTAButton active={true} linkto={"/signup"}>
+                                    <div className='flex gap-3 items-center'>
+                                        Explore full catalog
+                                        <FaArrowRight/>
+                                    </div>
+                                </CTAButton>
+
+                                <CTAButton active={false} linkto={"/signup"}>
+                                    <div>
+                                        Learn more
+                                    </div>
+                                </CTAButton>
+                            </div>
+
+                    </div>
+
+            </div>
+
+            <div className='w-11/12 mx-auto max-w-maxContent flex flex-col items-center justify-between gap-7'>
+
+                    <div className='flex flex-col gap-5 md:flex-row md:justify-between w-full my-[95px]'>
+
+                            <div className='w-full md:w-[45%] text-4xl font-semibold text-center md:text-start'>
+                                Get the Skills you need for a 
+                                <HighlightText text={" job that is in demand"}/>
+                            </div>
+
+                            <div className='w-full md:w-[45%] flex flex-col gap-10 items-center md:items-start'>
+                                <div className='text-[16px] text-center md:text-start'>
+                                    The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                                </div>
+                                <CTAButton active={true} linkto={"signup"}>
+                                    <div>
+                                        Learn more
+                                    </div>
+                                </CTAButton>
+                            </div>
+                    </div>
+
+            </div>
+
+            <TimeLineSection></TimeLineSection>
+
+            <LearningLanguageSection/>
 
         </div>
+
+
+        {/* Section-3  */}
+        <div className='w-11/12 max-w-maxContent mx-auto flex flex-col items-center justify-between gap-8 text-white'>
+                    <InstructorSection/>
+
+                    <h2>Review from other Learners</h2>
+
+                    {/* review slider  */}
+        </div>
+
+
+        <Footer/>
 
  
     </div>
