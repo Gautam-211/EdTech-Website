@@ -34,20 +34,28 @@ const TimeLineSection = () => {
   return (
     <div className='w-11/12 flex flex-col md:flex-row justify-between items-center gap-10 mx-auto max-w-maxContent mb-10'>
 
-        <div className='max-sm:mx-auto max-sm:w-fit w-[45%] flex flex-col gap-10 md:gap-16 md:ml-10'>
+        <div className='max-sm:mx-auto max-sm:w-fit w-[45%] flex flex-col sm:gap-2 md:ml-10'>
         {timeLine.map((element, index) => {
             return (
-              <div className='flex gap-6 items-center' key={index}>
+              <div className="flex flex-col sm:gap-3" key={index}>
+                <div className='flex gap-6 items-center' key={index}>
 
-                    <div className='w-[50px] h-[50px] bg-white flex items-center justify-center shadow-lg rounded-full'>
-                        <img src={element.Logo} alt="" />
-                    </div>
+                      <div className='w-[50px] h-[50px] bg-white flex items-center justify-center shadow-lg rounded-full'>
+                          <img src={element.Logo} alt="" />
+                      </div>
 
-                    <div className='flex flex-col '>
-                        <h2 className='font-semibold text-[18px]'>{element.Heading}</h2>
-                        <p className='text-base'>{element.Description}</p>
-                    </div>
-                
+                      <div className='flex flex-col '>
+                          <h2 className='font-semibold text-[18px]'>{element.Heading}</h2>
+                          <p className='text-base'>{element.Description}</p>
+                      </div>
+                  
+                </div>
+
+                <div
+                  className={` ${
+                    timeLine.length - 1 === index ? "hidden" : "block"
+                  }  h-14 border-dotted border-r border-richblack-100 bg-richblack-400/0 w-[26px]`}
+                ></div>
               </div>
             );
           })}

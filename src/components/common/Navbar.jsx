@@ -1,14 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import {NavbarLinks} from "../../data/navbar-links"
 import { useSelector } from 'react-redux'
+import { ACCOUNT_TYPE } from '../../utils/constants'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import ProfileDropDown from '../core/Auth/ProfileDropDown'
+import { apiConnector } from '../../services/apiconnector'
+import { categories } from '../../services/apis'
 
 const Navbar = () => {
 
     const {token} = useSelector( (state) => state.auth)
     const {user} = useSelector( (state) => state.profile)
     const {totalItems} = useSelector( (state) => state.cart)
+
+    const [subLinks, setSubLinks] = useState([]);
+
+    const fetchSubLinks = async() => {
+        try {
+            const result = await apiConnector("GET",categories.CATEGORIES_API);
+            console.log(result)
+            setSubLinks(result.data.data);
+            
+        } catch (error) {
+            console.log("Could not fetch the category list");
+            console.log(error.message);
+        }
+    }
+
+    useEffect(() => {
+            fetchSubLinks();
+    },[])
 
     const location = useLocation();
     const matchRoute = (route) => {
@@ -56,8 +79,50 @@ const Navbar = () => {
 
             {/* Login/SigIn/Dashboard/Logout  */}
 
-            <div className='flex gap-x-4 items-center'>
+            <div className='flex gap-x-6 items-center'>
 
+                {
+                    user && user?.accountType != ACCOUNT_TYPE.INSTRUCTOR && (
+                        <Link to={"/dashboard/cart"} className='relative'>
+                            <AiOutlineShoppingCart/>
+                            {
+                                totalItems>0 && (
+                                    <span className='p-2 rounded-full bg-caribbeangreen-200 animate-bounce'>
+                                        {totalItems}
+                                    </span>
+                                )
+                            }
+                        </Link>
+                    )
+                }
+
+                {
+                    token === null && (
+                        <Link to={"/login"}>
+                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                            text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
+                            transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
+                                Login
+                            </button>
+                        </Link>
+                    )
+                }
+
+                {
+                    token === null && (
+                        <Link to={"/signup"}>
+                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                            text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
+                            transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
+                                Signup
+                            </button>
+                        </Link>
+                    )
+                }
+
+                {
+                    token !== null && <ProfileDropDown/>
+                }
             </div>
 
         </div>
