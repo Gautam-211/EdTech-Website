@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { HomePageExplore } from '../../../data/homepage-explore';
 import HighlightText from './HighlightText';
+import CourseCard from './CourseCard';
 
 
 const tabsName = [
@@ -21,7 +22,7 @@ const ExploreMore = () => {
     }
 
   return (
-    <div>
+    <div className='md:relative w-full flex flex-col items-center'>
 
         <div className='text-4xl font-semibold text-center'>
             Unlock the 
@@ -32,7 +33,7 @@ const ExploreMore = () => {
             Learn to build anything you can imagine
         </p>
 
-        <div className='p-1 flex gap-2 bg-richblack-700 rounded-lg sm:rounded-full mt-5 shadow-md shadow-richblack-400 mb-10'>
+        <div className='p-1 flex w-fit justify-center gap-2 bg-richblack-700 rounded-lg sm:rounded-full mt-5 shadow-md shadow-richblack-600 md:mb-[9rem]'>
             {
                 tabsName.map((element,index) => {
                     return(
@@ -48,6 +49,21 @@ const ExploreMore = () => {
 
                             {element}
                         </div>
+                    )
+                })
+            }
+        </div>
+
+        {/* course cards  */}
+
+        <div className='md:absolute max-sm:mt-12 -bottom-[13rem] z-10 flex flex-col items-center md:flex-row gap-10 justify-between w-full'>
+            {
+                courses.map((element,index) => {
+                    return (
+                        <CourseCard key={index}
+                        cardData={element}
+                        currentCard = {currentCard}
+                        setCurrentCard={setCurrentCard}/>
                     )
                 })
             }

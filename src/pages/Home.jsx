@@ -136,13 +136,13 @@ const Home = () => {
 
         {/* Section-2  */}
 
-        <div className='bg-pure-greys-5 text-richblack-700 pb-[5rem]'>
+        <div className='bg-pure-greys-5 text-richblack-700 pb-[5rem] mt-[3rem] md:mt-[7rem]'>
             
-            <div className='homepage_bg h-[333px]'>
+            <div className='homepage_bg h-[100px] md:h-[333px] flex items-center '>
 
                     <div className='w-11/12 max-w-maxContent flex items-center gap-5 mx-auto'>
 
-                            <div className='flex gap-7 text-white justify-center w-full mt-[150px]'>
+                            <div className='flex gap-7 text-white justify-center w-full mt-[10px]'>
 
                                 <CTAButton active={true} linkto={"/signup"}>
                                     <div className='flex gap-3 items-center'>
@@ -164,7 +164,7 @@ const Home = () => {
 
             <div className='w-11/12 mx-auto max-w-maxContent flex flex-col items-center justify-between gap-7'>
 
-                    <div className='flex flex-col gap-5 md:flex-row md:justify-between w-full my-[95px]'>
+                    <div className='flex flex-col gap-5 md:flex-row md:justify-between w-full my-[80px] md:my-[95px]'>
 
                             <div className='w-full md:w-[45%] text-4xl font-semibold text-center md:text-start'>
                                 Get the Skills you need for a 

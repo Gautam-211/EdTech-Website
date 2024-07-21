@@ -39,7 +39,7 @@ const TimeLineSection = () => {
             return (
               <div className='flex gap-6 items-center' key={index}>
 
-                    <div className='w-[50px] h-[50px] bg-white flex items-center justify-center shadow-lg'>
+                    <div className='w-[50px] h-[50px] bg-white flex items-center justify-center shadow-lg rounded-full'>
                         <img src={element.Logo} alt="" />
                     </div>
 
