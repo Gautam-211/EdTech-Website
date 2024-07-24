@@ -8,6 +8,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 
 const Navbar = () => {
 
@@ -20,7 +21,6 @@ const Navbar = () => {
     const fetchSubLinks = async() => {
         try {
             const result = await apiConnector("GET",categories.CATEGORIES_API);
-            console.log(result)
             setSubLinks(result.data.data);
             
         } catch (error) {
@@ -37,6 +37,8 @@ const Navbar = () => {
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname)
     }
+
+    console.log(subLinks)
 
   return (
     <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 w-full'>
@@ -56,9 +58,32 @@ const Navbar = () => {
                                     {
                                         link.title === "Catalog" ? 
                                             (
-                                                <Link>
+                                                <div className='relative flex items-center gap-x-2 group cursor-pointer'>
+
+                                                    <p>{link.title}</p>
+                                                    <IoIosArrowUp className='group-hover:rotate-180 transition-all duration-100 ease-linear'/>
+
+                                                    <div className='z-10 invisible absolute left-[-110px] top-[40px]
+                                                    flex flex-col rounded-md bg-richblack-5 p-4 text-richblue-900 gap-y-1
+                                                    opacity-0 transition-all duration-200 group-hover:visible
+                                                    group-hover:opacity-100 lg:w-[300px]'>
+                                                        
+                                                        <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 bg-richblack-5
+                                                        translate-x-[80%] translate-y-[-20%] -z-10'></div>
+
+                                                        {
+                                                            subLinks.length? (
+                                                                subLinks.map( (subLink) => (
+                                                                        <Link to={`/catalog/${subLink.name}`} key={subLink._id}>
+                                                                                <p className='hover:bg-richblack-25 px-3 py-2 rounded-md'>{subLink.name}</p>
+                                                                        </Link>
+                                                                ))                                                                
+                                                            ) : (<div></div>)
+                                                        }
                                                     
-                                                </Link>
+                                                    </div>
+
+                                                </div>
                                             ) 
                                             : 
                                             (
@@ -82,7 +107,7 @@ const Navbar = () => {
             <div className='flex gap-x-6 items-center'>
 
                 {
-                    user && user?.accountType != ACCOUNT_TYPE.INSTRUCTOR && (
+                    user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
                         <Link to={"/dashboard/cart"} className='relative'>
                             <AiOutlineShoppingCart/>
                             {
@@ -102,7 +127,7 @@ const Navbar = () => {
                             <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
                             text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
                             transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
-                                Login
+                                Log in
                             </button>
                         </Link>
                     )
@@ -114,7 +139,7 @@ const Navbar = () => {
                             <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
                             text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
                             transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
-                                Signup
+                                Sign up
                             </button>
                         </Link>
                     )

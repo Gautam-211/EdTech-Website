@@ -76,7 +76,7 @@ exports.resetPassword = async(req,res) => {
         const user = await User.findOne({token});
 
         if (!user){
-            return re.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"Invalid link"
             })

@@ -212,7 +212,7 @@ exports.login = async(req,res) => {
             existingUser.password = undefined;
 
             //set options for cookie
-            options = {
+            const options = {
                 expires: new Date(Date.now() + 3*24*60*60*1000),
                 httpOnly:true
             }
@@ -271,7 +271,7 @@ exports.changePassword = async(req,res) => {
         const user = await User.findById(userId);
 
         if (await bcrypt.compare(oldPassword, user.password)){
-            const updatedUser = await User.findOneAndUpdate({email},{password:newPassword})
+            const updatedUser = await User.findByIdAndUpdate(userId,{password:newPassword})
 
             //send confirmation  email
             try {

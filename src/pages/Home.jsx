@@ -18,12 +18,12 @@ const Home = () => {
         
         <div className='max-w-maxContent relative mx-auto flex flex-col w-11/12 items-center text-white justify-between'>
 
-            <Link to={"/signup"}>
-                <div className='group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-300 transition-all duration-200
+            <Link to={"/signup"} className='mt-16'>
+                <div className='group p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-300 transition-all duration-200
                 hover:scale-95 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] hover:drop-shadow-none hover:text-richblack-25'>
                     <div className='flex justify-center items-center gap-2 rounded-full px-10 py-[5px] 
                     group-hover:bg-richblack-900'>
-                        <p>Become an instructor</p>
+                        <p>Become an Instructor</p>
                         <FaArrowRight/>
                     </div>
                 </div>

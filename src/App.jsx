@@ -1,6 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar";
+import Login from "./pages/Login";
+import Error from "./pages/Error";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 
 function App() {
   return (
@@ -8,6 +12,10 @@ function App() {
         <Navbar/>
         <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
+            <Route path="/update-password/:token" element={<UpdatePassword/>}/>
+            <Route path="/error" element={<Error/>}/>
         </Routes>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProfileDropDown = () => {
   return (
-    <div></div>
+    <div className='text-richblack-5'>hello</div>
   )
 }
 
