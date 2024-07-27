@@ -13,8 +13,8 @@ const OTPSchema = new mongoose.Schema({
         },
         createdAt:{
             type:Date,
-            default:Date.now(),
-            expires:5*60
+            default:Date.now,
+            expires:300
         }
 })
 
@@ -40,4 +40,7 @@ OTPSchema.pre("save",async function(next){
     next();
 })
 
-module.exports = mongoose.model("OTP",OTPSchema)
+const OTPModel = mongoose.model("OTP", OTPSchema);
+OTPModel.createIndexes();
+
+module.exports = OTPModel;

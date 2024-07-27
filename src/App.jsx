@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
+import Signup from "./pages/Signup";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/verify-email" element={<VerifyEmail/>}/>
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/update-password/:token" element={<UpdatePassword/>}/>
             <Route path="/error" element={<Error/>}/>

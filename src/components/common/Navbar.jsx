@@ -38,7 +38,6 @@ const Navbar = () => {
         return matchPath({path:route}, location.pathname)
     }
 
-    console.log(subLinks)
 
   return (
     <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 w-full'>
@@ -108,7 +107,7 @@ const Navbar = () => {
 
                 {
                     user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-                        <Link to={"/dashboard/cart"} className='relative'>
+                        <Link to={"/dashboard/cart"} className='relative text-white'>
                             <AiOutlineShoppingCart/>
                             {
                                 totalItems>0 && (
