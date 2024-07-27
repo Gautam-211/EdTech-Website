@@ -8,7 +8,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
+import { IoIosArrowUp } from 'react-icons/io'
 
 const Navbar = () => {
 
