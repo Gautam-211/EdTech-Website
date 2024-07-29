@@ -71,7 +71,7 @@ const LearningGrid = () => {
                             )
                             :
                             (
-                                <div className='flex flex-col gap-6 px-8 pt-10 pb-[5rem]'>
+                                <div className='flex flex-col gap-6 px-8 md:px-4 lg:px-8 pt-10 pb-[5rem]'>
                                     <h1 className='text-white'>{card.heading}</h1>
                                     <p className='text-richblack-300'>{card.description}</p>
                                 </div>

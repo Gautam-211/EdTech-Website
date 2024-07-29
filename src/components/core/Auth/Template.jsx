@@ -9,7 +9,7 @@ function Template({ title, description1, description2, image, formType }) {
   const { loading } = useSelector((state) => state.auth)
 
   return (
-    <div className="grid place-items-center pt-4 w-full">
+    <div className="grid place-items-center pt-4 w-full mt-16">
       {loading ? (
         <div className='absolute top-[45vh]'>
             <Spinner/>

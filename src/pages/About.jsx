@@ -6,6 +6,7 @@ import BannerImage3 from "../assets/Images/aboutus3.webp";
 import Quote from '../components/core/AboutPage/Quote';
 import FoundingStory from '../assets/Images/FoundingStory.png'
 import LearningGrid from '../components/core/AboutPage/LearningGrid';
+import ContactUsSection from '../components/core/AboutPage/ContactUsSection';
 
 const statsData = [
     {
@@ -27,7 +28,7 @@ const statsData = [
 
 const About = () => {
   return (
-    <div className='bg-richblack-700 text-white w-full'>
+    <div className='bg-richblack-700 text-white w-full pt-16'>
         {/* section-1  */}
         <section className='w-11/12 max-w-maxContent mx-auto'>
             <div className='flex flex-col text-center gap-y-12 w-full mt-[5rem] relative'>
@@ -139,8 +140,9 @@ const About = () => {
         </section>
 
         {/* Section-5  */}
-        <section className='w-full bg-richblack-900'>
+        <section className='w-full bg-richblack-900 flex flex-col gap-y-5'>
             <LearningGrid/>
+            <ContactUsSection/>
         </section>
     </div>
   )

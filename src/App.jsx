@@ -8,6 +8,9 @@ import UpdatePassword from "./pages/UpdatePassword";
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
+import OpenRoute from "./components/core/Auth/OpenRoute";
+import PrivateRoute from "./components/core/Auth/PrivateRoute";
 
 function App() {
   return (
@@ -16,11 +19,38 @@ function App() {
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/about" element={<About/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/verify-email" element={<VerifyEmail/>}/>
-            <Route path="/forgot-password" element={<ForgotPassword/>}/>
-            <Route path="/update-password/:token" element={<UpdatePassword/>}/>
+            <Route path="/contact" element={<Contact/>}/>
+
+            <Route path="/login" element={
+                                            <OpenRoute>
+                                                <Login/>
+                                            </OpenRoute>
+                                          }/>
+
+            <Route path="/signup" element={
+                                            <OpenRoute>
+                                                <Signup/>
+                                            </OpenRoute>   
+                                          }/>
+
+            <Route path="/verify-email" element={
+                                            <OpenRoute>
+                                                <VerifyEmail/>
+                                            </OpenRoute>   
+                                          }/>
+
+            <Route path="/forgot-password" element={
+                                            <OpenRoute>
+                                                <ForgotPassword/>
+                                            </OpenRoute>   
+                                          }/>
+
+            <Route path="/update-password/:token" element={
+                                            <OpenRoute>
+                                                <UpdatePassword/>
+                                            </OpenRoute>   
+                                          }/>
+                                           
             <Route path="/error" element={<Error/>}/>
         </Routes>
     </div>

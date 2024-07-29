@@ -13,7 +13,7 @@ import ExploreMore from '../components/core/homepage/ExploreMore'
 
 const Home = () => {
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full mt-16'>
         {/* Section-1 */}
         
         <div className='max-w-maxContent relative mx-auto flex flex-col w-11/12 items-center text-white justify-between'>

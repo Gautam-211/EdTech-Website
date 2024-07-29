@@ -36,7 +36,7 @@ const UpdatePassword = () => {
     }
 
   return (
-    <div className='text-white flex justify-center items-center w-11/12'>
+    <div className='text-white flex justify-center items-center w-11/12 mt-16'>
         {
             loading? (
                 <div className='absolute top-[45vh]'>

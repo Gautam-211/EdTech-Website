@@ -32,14 +32,14 @@ const ProfileDropDown = () => {
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
-        
+
     }, []);
 
 
   return (
     <div className='text-richblack-5'>
         <div ref={divRef} className='flex items-center gap-1 cursor-pointer group relative' onClick={() => setOpen((prev) => !prev)}>
-          <img src={image} alt="profile dropdown" className='w-[2.5rem] h-[2.5rem] rounded-full'/>
+          <img src={image} alt="profile dropdown" className='w-[2rem] h-[2rem] rounded-full'/>
           <TiArrowSortedUp className={`${open?"rotate-180":""} transition-all duration-200 ease-linear`} />
 
           <div className={`absolute ${open?"visible":"invisible"} p-1 bg-richblack-5 text-richblack-900 -bottom-[5rem]

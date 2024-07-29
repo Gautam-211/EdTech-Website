@@ -40,7 +40,8 @@ const Navbar = () => {
 
 
   return (
-    <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 w-full'>
+    <div className='fixed bg-opacity-50 z-50 flex h-14 items-center justify-center border-b-[1px]
+     border-b-richblack-700 w-full shadow-lg inset-0 bg-richblack-900 backdrop-blur-md'>
         <div className='w-11/12 flex max-w-maxContent justify-between items-center'>
             {/* Logo  */}
             <Link to={"/"}>
@@ -107,7 +108,7 @@ const Navbar = () => {
 
                 {
                     user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-                        <Link to={"/dashboard/cart"} className='relative text-white'>
+                        <Link to={"/dashboard/cart"} className='relative text-white text-2xl'>
                             <AiOutlineShoppingCart/>
                             {
                                 totalItems>0 && (

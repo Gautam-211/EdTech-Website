@@ -7,6 +7,7 @@ const userRoutes = require("./routes/User");
 // const paymentRoutes = require("./routes/Payments");
 const profileRoutes = require("./routes/Profile");
 const courseRoutes = require("./routes/Course");
+const contactUsRoutes = require("./routes/Contact")
 
 //config functions
 const dbConnect = require("./config/database");
@@ -48,6 +49,7 @@ cloudinaryConnect();
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
+app.use("/api/v1/reach",contactUsRoutes)
 // app.use("/api/v1/payment", paymentRoutes);
 
 //default route
