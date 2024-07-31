@@ -4,6 +4,7 @@ import { VscDashboard, VscSignOut } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../../services/operations/authAPI';
+import ConfirmationModal from '../../common/ConfirmationModal';
 
 const ProfileDropDown = () => {
 
@@ -12,10 +13,7 @@ const ProfileDropDown = () => {
   const navigate = useNavigate()
   const image = user.image;
   const [open,setOpen] = useState(false);
-
-  function handleLogout(){
-        dispatch(logout(navigate));
-  }
+  const [confirmationModal, setConfirmationModal] = useState(null);
 
   const divRef = useRef(null);
 
@@ -56,13 +54,23 @@ const ProfileDropDown = () => {
                 </Link>
                 
                 <div className='flex items-center gap-2 hover:bg-richblack-100 px-2 py-1 rounded-md z-20'
-                onClick={handleLogout}>
+                onClick={() => setConfirmationModal({
+                    text1:"Are you sure?",
+                    text2:"You will be logged out!",
+                    btn1Text:"Logout",
+                    btn2Text:"Cancel",
+                    btn1Handler : () => dispatch(logout(navigate)),
+                    btn2Handler : () => setConfirmationModal(null)
+                })}>
                     <VscSignOut/>
                     Logout
                 </div>
                 
           </div>
         </div>
+        {
+                confirmationModal && <ConfirmationModal modalData={confirmationModal}/>
+        }
     </div>
   )
 }

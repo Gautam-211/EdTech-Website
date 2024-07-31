@@ -11,6 +11,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
+import Dashboard from "./pages/Dashboard";
+import MyProfile from "./components/core/Dashboard/MyProfile";
 
 function App() {
   return (
@@ -50,8 +52,23 @@ function App() {
                                                 <UpdatePassword/>
                                             </OpenRoute>   
                                           }/>
+
+          <Route
+            element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+          }>
+
+                  <Route path="dashboard/my-profile" element={<MyProfile/>}/>
+                  <Route path="dashboard/my-courses" element/>
+                  <Route path="dashboard/settings" element/>
+
+          </Route>
+        
+
                                            
-            <Route path="/error" element={<Error/>}/>
+            <Route path="*" element={<Error/>}/>
         </Routes>
     </div>
   );

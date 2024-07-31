@@ -185,7 +185,7 @@ exports.login = async(req,res) => {
         }
 
         //check if user does not exist in the database
-        const existingUser = await User.findOne({email});
+        const existingUser = await User.findOne({email}).populate("additionalDetails");
 
         if (!existingUser){
             return res.status(401).json({
