@@ -46,7 +46,7 @@ const ProfileDropDown = () => {
                 {/* <div className='absolute left-[50%] top-0 h-4 w-4 rotate-45 bg-richblack-5
                                                         translate-x-[80%] translate-y-[-10%] z-10 '></div> */}
 
-                <Link to={"/dashboard"}>
+                <Link to={"/dashboard/my-profile"}>
                     <div className='flex items-center gap-2 hover:bg-richblack-100 px-2 py-1 rounded-md z-20'>
                         <VscDashboard/>
                         Dashboard

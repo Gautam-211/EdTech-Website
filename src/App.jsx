@@ -13,6 +13,8 @@ import OpenRoute from "./components/core/Auth/OpenRoute";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/Dashboard/MyProfile";
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart";
 
 function App() {
   return (
@@ -61,6 +63,8 @@ function App() {
           }>
 
                   <Route path="dashboard/my-profile" element={<MyProfile/>}/>
+                  <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+                  <Route path="dashboard/cart" element={<Cart/>}/>
                   <Route path="dashboard/my-courses" element/>
                   <Route path="dashboard/settings" element/>
 

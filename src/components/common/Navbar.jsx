@@ -112,7 +112,8 @@ const Navbar = () => {
                             <AiOutlineShoppingCart/>
                             {
                                 totalItems>0 && (
-                                    <span className='p-2 rounded-full bg-caribbeangreen-200 animate-bounce'>
+                                    <span className='absolute text-base  rounded-full bg-caribbeangreen-200
+                                     animate-bounce -right-3 -top-2 w-[1.5rem] h-[1.5rem] flex items-center justify-center'>
                                         {totalItems}
                                     </span>
                                 )

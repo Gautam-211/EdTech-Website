@@ -15,11 +15,11 @@ const MyProfile = () => {
 
         {/* Section-1  */}
 
-        <div className='bg-richblack-800 rounded-lg px-12 py-8 border-richblack-700 border-[1px] flex items-center justify-between'>
+        <div className='bg-richblack-800 rounded-lg px-4 md:px-12 py-8 border-richblack-700 border-[1px] flex items-center justify-between'>
             <div className='flex gap-x-3'>
 
                 <img src={user?.image} alt={`profile-${user?.firstName}`} 
-                    className='aspect-square w-[4.5rem] rounded-full object-cover'/>
+                    className='aspect-square w-[4rem] rounded-full object-cover'/>
                 <div className='flex flex-col justify-center'>
                     <p className='font-semibold text-lg'>
                         {user?.firstName + " " + user?.lastName}
@@ -43,7 +43,7 @@ const MyProfile = () => {
 
         {/* Section-2  */}
 
-        <div className='bg-richblack-800 rounded-lg px-12 py-8 border-richblack-700 border-[1px] flex items-center justify-between'>
+        <div className='bg-richblack-800 rounded-lg px-4 md:px-12 py-8 border-richblack-700 border-[1px] flex items-center justify-between'>
             <div className='flex flex-col gap-y-4'>
                 <h1 className='text-lg font-semibold'>About</h1>
                 <p className='text-richblack-300'>
@@ -62,10 +62,20 @@ const MyProfile = () => {
 
         {/* Section-3  */}
 
-        <div className='bg-richblack-800 rounded-lg px-12 py-8 border-richblack-700 border-[1px] flex items-start justify-between'>
-                <div className='flex flex-col gap-y-8'>
-                    <h1 className='text-lg font-semibold'>Personal Details</h1>
-                    <div className='flex gap-x-[10rem]'>
+        <div className='bg-richblack-800 rounded-lg px-4 md:px-12 py-8 border-richblack-700 border-[1px] flex items-start justify-between'>
+                <div className='flex flex-col gap-y-8 w-full'>
+                    <div className='flex items-center justify-between w-full'>
+                        <h1 className='text-lg font-semibold'>Personal Details</h1>
+                        <IconBtn text={"Edit"}
+                            onclick={() => {
+                                navigate("/dashboard/settings")
+                            }}
+                            customClasses={"flex items-center gap-x-1 font-semibold"}>
+
+                                <RiEditBoxLine />
+                        </IconBtn>
+                    </div>
+                    <div className='flex max-sm:justify-between md:gap-x-[10rem]'>
                         <div className='flex flex-col gap-y-4'>
                             <div>
                                 <p className='text-base text-richblack-300'>First Name</p>
@@ -98,14 +108,7 @@ const MyProfile = () => {
                     </div>
                 </div>
 
-                <IconBtn text={"Edit"}
-                        onclick={() => {
-                            navigate("/dashboard/settings")
-                        }}
-                        customClasses={"flex items-center gap-x-1 font-semibold"}>
-
-                            <RiEditBoxLine />
-                </IconBtn>
+                
         </div>
     </div>
   )
