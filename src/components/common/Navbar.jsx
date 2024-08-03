@@ -9,28 +9,28 @@ import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
 import { IoIosArrowUp } from 'react-icons/io'
+import { fetchCourseCategories } from '../../services/operations/courseDetailsAPI'
 
 const Navbar = () => {
 
     const {token} = useSelector( (state) => state.auth)
     const {user} = useSelector( (state) => state.profile)
     const {totalItems} = useSelector( (state) => state.cart)
+    const [open,setOpen] = useState(false);
 
     const [subLinks, setSubLinks] = useState([]);
 
     const fetchSubLinks = async() => {
-        try {
-            const result = await apiConnector("GET",categories.CATEGORIES_API);
-            setSubLinks(result.data.data);
-            
-        } catch (error) {
-            console.log("Could not fetch the category list");
-            console.log(error.message);
+        const categories = await fetchCourseCategories();
+        if(categories.length>0){
+            setSubLinks(categories);
         }
     }
 
     useEffect(() => {
             fetchSubLinks();
+
+            return () => {fetchSubLinks()}
     },[])
 
     const location = useLocation();
@@ -48,13 +48,15 @@ const Navbar = () => {
                 <img src={logo} alt="StudyNotion Logo" width={160} height={42} loading='lazy'/>
             </Link>
 
-            {/* Nav Links  */}
+            {/* Nav Links */}
             <nav>
-                <ul className='flex gap-x-6 text-richblack-25 items-center'>
+                <ul className={`flex gap-x-6 text-richblack-25 items-center max-sm:-translate-y-ful transition-all duration-1000 ease-in-out  
+                    ${open?"max-sm:block flex-col absolute translate-y-0 pt-4 w-screen items-center bg-richblack-900 opacity-90 backdrop-blur-md top-0 left-0 z-40":
+                    "max-sm:hidden"}`}>
                     {
                         NavbarLinks.map((link,index) => {
                             return (
-                                <li className='' key={index}>
+                                <li className='flex items-center justify-center py-2' key={index}>
                                     {
                                         link.title === "Catalog" ? 
                                             (
@@ -149,6 +151,17 @@ const Navbar = () => {
                 {
                     token !== null && <ProfileDropDown/>
                 }
+
+                <div className='z-50 md:hidden flex relative flex-col gap-y-2 w-[2rem] aspect-square justify-center cursor-pointer items-center' 
+                        onClick={() => setOpen((prev) => !prev)}>
+                    <div className={`${open?"rotate-45 absolute":""} transition-all duration-300 ease-linear h-[3px] 
+                    rounded-xl bg-richblack-500 w-full`}></div>
+
+                    <div className={`${open?"invisible":"visible"} h-[3px] rounded-xl bg-richblack-500 w-full`}></div>
+
+                    <div className={`${open?"-rotate-45 absolute":""} h-[3px] transition-all duration-300 ease-linear
+                     rounded-xl bg-richblack-500 w-full`}></div>
+                </div>
             </div>
 
         </div>

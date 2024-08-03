@@ -9,7 +9,7 @@ const Contact = () => {
     <div className='w-11/12 max-w-maxContent mx-auto mt-16 flex flex-col lg:flex-row justify-between gap-y-6 pt-16
      items-center lg:items-start'>
         
-        <div className='w-full lg:w-[40%] items-center lg:items-start h-fit flex flex-col gap-y-8 px-8 py-10 rounded-2xl bg-richblack-800 text-richblack-200 font-semibold'>
+        <div className='w-full lg:w-[40%] items-start lg:items-start h-fit flex flex-col gap-y-8 px-8 py-10 rounded-2xl bg-richblack-800 text-richblack-200 font-semibold'>
 
             <div className='flex flex-col gap-y-1'>
                 <div className='flex gap-2 text-white items-center text-xl'>
@@ -28,7 +28,7 @@ const Contact = () => {
                     Visit Us
                 </div>
                 <div className='flex flex-col text-base'>
-                    <p>Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,</p>
+                    <p>Akshya Nagar 1st Block 1st Cross,<br /> Rammurthy nagar,</p>
                     <p>Bangalore-560016</p>
                 </div>
             </div>

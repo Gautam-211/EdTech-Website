@@ -16,7 +16,7 @@ const SidebarLink = ({link,iconName}) => {
   return (
     <NavLink to={link.path}
         className={`relative px-8 py-2 text-lg hover:text-white transition-all duration-200 ease-linear
-        ${matchRoute(link.path)?"bg-yellow-25 bg-opacity-30 text-yellow-25":"bg-opacity-0 text-richblack-300"}`}>
+        ${matchRoute(link.path)?"bg-yellow-25 bg-opacity-25 text-yellow-50":"bg-opacity-0 text-richblack-300"}`}>
 
             <span className={`absolute left-0 top-0 w-[0.2rem] h-full 
                 ${matchRoute(link.path)?"bg-yellow-50":"bg-opacity-0"}`}>
