@@ -13,14 +13,21 @@ exports.createCourse = async(req,res) => {
 
         // Convert the tag and instructions from stringified Array to Array
         const tag = JSON.parse(_tag)
-        // const instructions = JSON.parse(_instructions)
+        const instructions = JSON.parse(_instructions)
 
         //perform validation
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail || !tag.length ){
+        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail || !tag.length 
+                || !instructions.length
+            ){
             return res.status(403).json({
                 success:false,
                 message:"Fill all the required details"
             })
+        }
+
+        //status
+        if(!status || status===undefined){
+            status = "Draft"
         }
 
         //get instructor 
@@ -32,10 +39,6 @@ exports.createCourse = async(req,res) => {
                 success:false,
                 message:"Instructor details not found"
             })
-        }
-
-        if (!status || status === undefined) {
-            status = "Draft"
         }
 
         //check if given category is valid or not
@@ -58,7 +61,7 @@ exports.createCourse = async(req,res) => {
             whatYouWillLearn,
             price , category:categoryDetails._id,
             thumbnail:thumbnailImage.secure_url,
-            tag,status
+            tag,status, instructions
         })
 
         //update the user i.e. Instructor
@@ -175,7 +178,65 @@ exports.getFullCourseDetails = async(req,res) => {
 }
 
 exports.editCourse = async(req,res) => {
+    try {
+        const {courseId} = req.body;
+        const updates = req.body;
+        const course = await Course.findById(courseId);
 
+        if(!course){
+            return res.status(400).json({
+                success:false,
+                message:"Course does not exist"
+            })
+        }
+
+        if(req.files){
+            const thumbnail = req.files.thumbnailImage;
+            const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+            course.thumbnail = thumbnail.secure_url
+        }
+
+        for (const key in updates){
+            if(updates.hasOwnProperty(key)){
+                if(key==="tag" || key==="instructions"){
+                    course[key] = JSON.parse(updates[key]);
+                }
+                else{
+                    course[key] = updates[key]
+                }
+            }
+        }
+
+        await course.save();
+
+        const updatedCourse = await Course.findOne({
+            _id: courseId,
+          })
+            .populate({
+              path: "instructor",
+              populate: {
+                path: "additionalDetails",
+              },
+            })
+            .populate("category")
+            .populate("ratingAndReviews")
+            .populate({
+              path: "courseContent",
+              populate: {
+                path: "subSection",
+              },
+            })
+            .exec()
+         
+        return res.status(200).json({
+            success:true,
+            message:"Course udpated successfully",
+            data:updatedCourse
+        })
+
+    } catch (error) {
+        
+    }
 }
 
 exports.getInstructorCourses = async(req,res) => {

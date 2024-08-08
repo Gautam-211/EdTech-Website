@@ -37,8 +37,7 @@ exports.createSection = async(req,res) => {
           return res.status(200).json({
             success:true,
             message:"Section was created successfully",
-            updatedCourse,
-            data:newSection
+            data:updatedCourse,
           })
         
     } catch (error) {
@@ -56,9 +55,9 @@ exports.createSection = async(req,res) => {
 exports.updateSection = async(req,res) => {
     try {
         //get the data to be updated
-        const {sectionName, sectionId} = req.body;
+        const {sectionName, sectionId, courseId} = req.body;
 
-        if (!sectionName || !sectionId){
+        if (!sectionName || !sectionId || !courseId){
             return res.status(400).json({
                 success:false,
                 message:"Missing data"
@@ -72,9 +71,19 @@ exports.updateSection = async(req,res) => {
             {new : true}
         )
 
+        const course = await Course.findById(courseId)
+		.populate({
+			path:"courseContent",
+			populate:{
+				path:"subSection",
+			},
+		})
+		.exec();
+
         return res.status(200).json({
             success:true,
             message:"Section data updated successfully",
+            data: course
         })
         
     } catch (error) {
@@ -113,10 +122,19 @@ exports.deleteSection = async(req,res) => {
         //now delete the section
         await Section.findByIdAndDelete(sectionId);
 
+        const course = await Course.findById(courseId).populate({
+			path:"courseContent",
+			populate: {
+				path: "subSection"
+			}
+		})
+		.exec();
+
         //return response
         res.status(200).json({
             success:true,
-            message:"Section deleted successfully"
+            message:"Section deleted successfully",
+            data:course
         })
         
     } catch (error) {

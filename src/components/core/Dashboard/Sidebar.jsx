@@ -26,8 +26,8 @@ const Sidebar = ({open}) => {
 
   return (
         <div className={`flex flex-col min-w-[250px] border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800
-        py-10  mt-[3.5rem] max-lg:absolute ${open?"w-1/2 left-0 translate-x-0":"max-lg:-translate-x-full"}
-        transition-all duration-300 ease-in-out`}>
+        py-10  mt-[3.5rem] max-lg:fixed ${open?"w-1/2 left-0 translate-x-0":"max-lg:-translate-x-full"}
+        transition-all duration-300 ease-in-out z-50`}>
             <div className='flex flex-col text-white'>
                 {
                     sidebarLinks.map((link) => {
