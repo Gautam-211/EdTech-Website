@@ -27,7 +27,7 @@ const Dashboard = () => {
         ${open?"translate-x-[62%]":""} transition-all duration-300 ease-in-out`}
         onClick={() => setOpen((prev) => !prev)}>
             {open?"Close Menu":"Open Menu"} 
-            <FaArrowRight className={`${open?"rotate-180":""} trasnition-all duration-300 ease-in`}/>
+            <FaArrowRight className={`${open?"rotate-180":""} transition-all duration-300 ease-in`}/>
         </div>
 
         <div className='h-[calc(100vh)] lg:pt-[3.5rem] w-full overflow-auto'>

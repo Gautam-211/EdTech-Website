@@ -17,10 +17,6 @@ exports.uploadImageToCloudinary = async(file,folder, height, quality) => {
         
     } catch (error) {
         console.error(error);
-        return resizeBy.status(500).json({
-            success:false,
-            message:"Error in uploading image to cloudinary",
-            error:error.message
-        })
+        console.log(error.message)
     }
 } 

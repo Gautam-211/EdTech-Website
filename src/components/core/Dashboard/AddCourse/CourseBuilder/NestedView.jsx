@@ -5,9 +5,9 @@ import { RxDropdownMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux'
 import ConfirmationModal from '../../../../common/ConfirmationModal'
 import { BiSolidDownArrow } from 'react-icons/bi';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineArrowRight, AiOutlinePlus } from 'react-icons/ai';
 import SubSectionModal from './SubSectionModal';
-import { deleteSection } from '../../../../../services/operations/courseDetailsAPI';
+import { deleteSection, deleteSubSection } from '../../../../../services/operations/courseDetailsAPI';
 import { setCourse } from '../../../../../slices/courseSlice';
 
 const NestedView = ({handleChangeEditSectionName}) => {
@@ -33,7 +33,16 @@ const NestedView = ({handleChangeEditSectionName}) => {
   }
 
   const handleDeleteSubSection = async(subSectionId, sectionId) => {
+        const result = await deleteSubSection({subSectionId, sectionId}, token);
+        if(result){
+            const updatedCourseContent = course.courseContent.map((section) => (
+                section._id === sectionId ? result : section 
+            ))
 
+            const updatedCourse = {...course, courseContent:updatedCourseContent};
+            dispatch(setCourse(updatedCourse));
+        }
+        setConfirmationModal(null);
   }
 
   return (
@@ -73,21 +82,21 @@ const NestedView = ({handleChangeEditSectionName}) => {
                         </div>
                     </summary>
 
-                    <div className='flex flex-col gap-y-2'>
+                    <div className='flex flex-col gap-y-2 pl-6 py-2'>
                         {
                             section?.subSection?.map((data) => (
                                 <div key={data?._id}
-                                    onClick={() => setViewSubSection(data)}
                                     className={`flex items-center justify-between
-                                        border-b-[1px] border-richblack-600q`}>
+                                        border-b-[1px] border-richblack-600 pb-2`}>
 
                                     <div className='flex items-center gap-2'>
-                                        <RxDropdownMenu className='text-xl text-richblack-300'/>
-                                        <p>{data?.title}</p>
+                                        <AiOutlineArrowRight/>
+                                        <p onClick={() => setViewSubSection(data)} className='cursor-pointer'>{data?.title}</p>
                                     </div>
 
                                     <div className='flex items-center gap-x-2'>
-                                        <button onClick={() => setEditSubSection({...data,sectionId:section._id})}>
+                                        <button onClick={() => setEditSubSection({...data,sectionId:section._id})}
+                                            className='z-30'>
                                             <MdEdit className='text-xl text-richblack-300'/>
                                         </button>
 
@@ -109,7 +118,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
                             ))
                         }
 
-                        <button className='flex items-center gap-x-2 text-yellow-50 text-lg mt-2'
+                        <button className='flex items-center gap-x-2 text-yellow-50'
                             onClick={() => setAddSubSection(section._id)}>
                             <AiOutlinePlus/>
                             Add Lecture

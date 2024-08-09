@@ -153,3 +153,79 @@ export const deleteSection = async(data, token) => {
     toast.dismiss(toastId);
     return result;
 }
+
+//create subSection
+export const createSubSection = async(data, token) => {
+    let result;
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", courseEndpoints.CREATE_SUBSECTION_API, data, {
+            Authorization: `Bearer ${token}` 
+        })
+
+        console.log("CREATE SUB SECTION API RESPONSE ...", response);
+        if(!response?.data?.success){
+            throw new Error(response.data.message)
+        }
+
+        toast.success("Lecture created successfully");
+        result = response?.data?.data
+        
+    } catch (error) {
+        console.log("CREATE SUB SECTION API RESPONSE...",error);
+        toast.error(error.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+//update subSection
+export const updateSubSection = async(data, token) => {
+    let result;
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", courseEndpoints.UPDATE_SUBSECTION_API, data, {
+            Authorization: `Bearer ${token}` 
+        })
+
+        console.log("UPDATE SUB SECTION API RESPONSE ...", response);
+        if(!response?.data?.success){
+            throw new Error(response.data.message)
+        }
+
+        toast.success("Lecture updated successfully");
+        result = response?.data?.data
+        
+    } catch (error) {
+        console.log("UPDATE SUB SECTION API RESPONSE...",error);
+        toast.error(error.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+//delete subSection
+export const deleteSubSection = async(data,token) => {
+    let result;
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", courseEndpoints.DELETE_SUBSECTION_API, data, {
+            Authorization: `Bearer ${token}` 
+        })
+
+        console.log("DELETE SUB SECTION API RESPONSE ...", response);
+        if(!response?.data?.success){
+            throw new Error(response.data.message)
+        }
+
+        toast.success("Lecture deleted successfully");
+        result = response?.data?.data
+        
+    } catch (error) {
+        console.log("DELETE SUB SECTION API RESPONSE...",error);
+        toast.error(error.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
