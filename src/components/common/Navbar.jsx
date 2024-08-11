@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux'
 import { ACCOUNT_TYPE } from '../../utils/constants'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
-import { apiConnector } from '../../services/apiconnector'
-import { categories } from '../../services/apis'
 import { IoIosArrowUp } from 'react-icons/io'
 import { fetchCourseCategories } from '../../services/operations/courseDetailsAPI'
 
@@ -76,7 +74,7 @@ const Navbar = () => {
                                                         {
                                                             subLinks.length? (
                                                                 subLinks.map( (subLink) => (
-                                                                        <Link to={`/catalog/${subLink.name}`} key={subLink._id}>
+                                                                        <Link to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`} key={subLink._id}>
                                                                                 <p className='hover:bg-richblack-25 px-3 py-2 rounded-md'>{subLink.name}</p>
                                                                         </Link>
                                                                 ))                                                                
@@ -106,7 +104,7 @@ const Navbar = () => {
 
             {/* Login/SigIn/Dashboard/Logout  */}
 
-            <div className='flex gap-x-6 items-center'>
+            <div className='flex gap-x-6 items-center max-sm:gap-x-3'>
 
                 {
                     user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
@@ -127,7 +125,7 @@ const Navbar = () => {
                 {
                     token === null && (
                         <Link to={"/login"}>
-                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] max-sm:px-[8px] max-sm:py-[5px]
                             text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
                             transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
                                 Log in
@@ -139,7 +137,7 @@ const Navbar = () => {
                 {
                     token === null && (
                         <Link to={"/signup"}>
-                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] max-sm:px-[8px] max-sm:py-[5px]
                             text-richblack-100 rounded-md hover:bg-caribbeangreen-300 hover:border-caribbeangreen-200
                             transition-all duration-200 ease-in hover:text-caribbeangreen-800'>
                                 Sign up

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getUserEnrolledCourses } from '../../../services/operations/profileAPI';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Spinner from '../../common/Spinner/Spinner';
 import ProgressBar from '@ramonak/react-progress-bar';
-import { addToCart } from '../../../slices/cartSlice';
 
 const EnrolledCourses = () => {
 

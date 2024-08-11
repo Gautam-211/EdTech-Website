@@ -1,7 +1,11 @@
 const Course = require("../models/Course");
 const Category = require('../models/Category');
 const User = require("../models/User");
+const SubSection = require("../models/SubSection")
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
+const Section = require("../models/Section");
+const CourseProgress = require("../models/CourseProgress");
+const { convertSecondsToDuration } = require("../utils/secToDuration");
 require("dotenv").config();
 
 //create course, only for instructor
@@ -167,14 +171,70 @@ exports.getCourseDetails = async(req,res) => {
         console.error(error);
         return res.status(500).json({
             success:false,
-            message:"Internal server error"
+            message:"Internal server "
         })
     }
 }
 
 
 exports.getFullCourseDetails = async(req,res) => {
+    try {
+        const {courseId} = req.body;
+        const userId = req.user.id;
 
+        const course = await Course.findById(courseId).populate({
+                                                            path:"instructor",
+                                                            populate:{
+                                                                path:"additionalDetails"
+                                                            }
+                                                        }).populate('category').populate("ratingAndReviews")
+                                                        .populate({
+                                                            path:"courseContent",
+                                                            populate:{
+                                                                path:"subSection"
+                                                            }
+                                                        }).exec();
+
+        let courseProgressCount = await CourseProgress.findOne({
+            courseID: courseId,
+            userId: userId,
+            })
+
+        if(!course){
+            return res.status(400).json({
+                success:false,
+                message:"Course does not exist"
+            })
+        }
+
+        let totalDurationInSeconds = 0
+        course.courseContent.forEach((content) => {
+            content.subSection.forEach((subSection) => {
+                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                totalDurationInSeconds += timeDurationInSeconds
+            })
+    })
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        courseDetails:course,
+        totalDuration,
+        completedVideos: courseProgressCount?.completedVideos
+          ? courseProgressCount?.completedVideos
+          : [],
+      },
+    })
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success:false,
+            message:"Internal server error"
+        })
+    }
 }
 
 exports.editCourse = async(req,res) => {
@@ -240,9 +300,86 @@ exports.editCourse = async(req,res) => {
 }
 
 exports.getInstructorCourses = async(req,res) => {
+    try {
+        const userId = req.user.id;
 
+        const instructor = await User.findById(userId);
+        if(!instructor){
+            return res.status(400).json({
+                success:false,
+                message:"User not found",
+            })
+        }
+
+        const courses = await Course.find({instructor:userId}).sort({createdAt : -1});
+
+        return res.status(200).json({
+            success:true,
+            message:"Courses fetched successfully",
+            data:courses
+        })
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success:false,
+            message:"Internal server error",
+            error:error.message
+        })
+    }
 }
 
-exports.deleteCourse = async(req,res) => {
+exports.deleteCourse = async (req, res) => {
+    try {
+      const { courseId } = req.body;
+  
+      // Find the course
+      const course = await Course.findById(courseId);
+      if (!course) {
+        return res.status(404).json({ 
+            message: "Course not found" 
+        })
+      }
+  
+      // Unenroll students from the course
+      const studentsEnrolled = course.studentsEnrolled
+      for (const studentId of studentsEnrolled) {
+        await User.findByIdAndUpdate(studentId, {
+          $pull: { courses: courseId },
+        })
+      }
+  
+      // Delete sections and sub-sections
+      const courseSections = course.courseContent
+      for (const sectionId of courseSections) {
+        // Delete sub-sections of the section
+        const section = await Section.findById(sectionId)
+        if (section) {
+            await SubSection.deleteMany({_id: {$in: section.subSection}});        
+        }
+  
+        // Delete the section
+        await Section.findByIdAndDelete(sectionId)
+      }
 
-}
+      //remove the course from the categoro
+      await Category.findByIdAndUpdate(course.category,{
+        $pull:{courses:course._id}
+      })
+  
+      // Delete the course
+      await Course.findByIdAndDelete(courseId)
+  
+      return res.status(200).json({
+        success: true,
+        message: "Course deleted successfully",
+      })
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: error.message,
+      })
+    }
+  }
