@@ -4,7 +4,7 @@ const app = express();
 
 //routes 
 const userRoutes = require("./routes/User");
-// const paymentRoutes = require("./routes/Payments");
+const paymentRoutes = require("./routes/Payments");
 const profileRoutes = require("./routes/Profile");
 const courseRoutes = require("./routes/Course");
 const contactUsRoutes = require("./routes/Contact")
@@ -52,7 +52,7 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/reach",contactUsRoutes)
 app.use("/api/v1/test",testRoutes);
-// app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 //default route
 app.get("/", (req,res) => {

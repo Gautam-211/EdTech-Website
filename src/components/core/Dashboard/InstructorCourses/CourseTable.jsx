@@ -69,7 +69,7 @@ const CourseTable = ({courses, setCourses}) => {
                                     className='h-[10rem] w-[17rem] rounded-md'/>
                                     <div className='flex flex-col gap-2 h-full'>
                                         <p className='text-lg'>{course?.courseName}</p>
-                                        <p className='text-richblack-300 w-[100%] md:w-[21rem]'>{course?.courseDescription}</p>
+                                        <p className='text-richblack-300 w-[100%] md:w-[21rem]'>{course?.courseDescription?.slice(0,100)}...</p>
                                         <p className='text-richblack-200'>Created : {formattedDate(course.createdAt)}</p>
                                         {
                                             course?.status === COURSE_STATUS.DRAFT ? (

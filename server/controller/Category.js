@@ -180,8 +180,18 @@ exports.categoryPageDetails = async (req, res) => {
       const selectedCategory = await Category.findById(categoryId)
         .populate({
           path: "courses",
+          model:"Course",
           match: { status: "Published" },
-          populate: "ratingAndReviews",
+          populate: [
+            {
+              path: "ratingAndReviews",
+              model: "RatingAndReview",
+            },
+            {
+              path: "instructor",
+              model: "User",
+            }
+          ]
         })
         .exec()
   
@@ -211,7 +221,12 @@ exports.categoryPageDetails = async (req, res) => {
       )
         .populate({
           path: "courses",
+          model:"Course",
           match: { status: "Published" },
+          populate:{
+            path:"instructor",
+            model:"User"
+          }
         })
         .exec()
 
@@ -219,9 +234,11 @@ exports.categoryPageDetails = async (req, res) => {
       const allCategories = await Category.find()
         .populate({
           path: "courses",
+          model:"Course",
           match: { status: "Published" },
           populate: {
             path: "instructor",
+            model:"User"
         },
         })
         .exec()
@@ -230,7 +247,7 @@ exports.categoryPageDetails = async (req, res) => {
       const mostSellingCourses = allCourses
         .sort((a, b) => b.sold - a.sold)
         .slice(0, 10)
-       // console.log("mostSellingCourses COURSE", mostSellingCourses)
+      //  console.log("mostSellingCourses COURSE", mostSellingCourses)
       res.status(200).json({
         success: true,
         data: {

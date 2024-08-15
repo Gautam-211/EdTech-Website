@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { getCatalogPageData } from '../services/operations/pageAndComponentDataAPI';
 import { apiConnector } from '../services/apiconnector';
 import { categories } from '../services/apis';
+import CatalogCourseCard from '../components/core/Catalog/CatalogCourseCard';
 
 const Catalog = () => {
 
@@ -15,7 +16,6 @@ const Catalog = () => {
         const result = await apiConnector("GET",categories.CATEGORIES_API);
         const category_id = result?.data?.data?.filter((ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName)[0]._id;
         setCategoryId(category_id);
-        console.log(category_id)
     }
 
     const getCategoryDetails = async() => {
@@ -30,7 +30,7 @@ const Catalog = () => {
     },[catalogName])
 
     useEffect(() => {
-        if(categoryId !== ""){
+        if(categoryId){
             getCategoryDetails();
         }
     },[categoryId])
@@ -41,19 +41,12 @@ const Catalog = () => {
         {/* Category Descritpion  */}
         <div className='bg-richblack-800 text-white'>
             <div className='w-11/12 max-w-maxContent mx-auto flex flex-col md:flex-row justify-between py-12 gap-y-4'>
-                <div className='flex flex-col gap-3 w-[100%] md:w-[60%]'>
-                    <p>home/catalog/pyton</p>
-                    <p className='text-3xl'>Python</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, nisi? Quaerat necessitatibus porro quas mollitia molestiae facilis quo, repellat est facere architecto dolore. Dicta dolorem accusamus est, commodi ratione reprehenderit perferendis eos, ab aperiam doloribus sequi corrupti maiores eligendi! Excepturi repudiandae, assumenda nam necessitatibus provident officia tenetur minus. Corporis, minus.</p>
-                </div>
-
-                <div className='md:pr-16 flex flex-col md:gap-2'>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
+                <div className='flex flex-col gap-3 w-[100%] md:w-[80%]'>
+                    <div className='flex items-center gap-1 text-richblack-300'>
+                        <p>Home / Catalog / </p> <span className='text-yellow-25'>{catalogPageData?.selectedCategory?.name}</span>
+                    </div>
+                    <p className='text-3xl'>{catalogPageData?.selectedCategory?.name}</p>
+                    <p>{catalogPageData?.selectedCategory?.description}</p>
                 </div>
             </div>
         </div>
@@ -66,18 +59,27 @@ const Catalog = () => {
                         <p className='pl-2'>Most Popular</p>
                         <p>New</p>
                     </div>
-                    <CourseSlider/>
+                    <CourseSlider courses={catalogPageData?.selectedCategory?.courses}/>
                 </div>
 
                 {/* Section-2  */}
                 <div className='flex flex-col gap-4'>
-                    <p className='text-3xl'>Top Courses</p>
-                    <CourseSlider/>
+                    <p className='text-3xl'>Top Courses in {catalogPageData?.differentCategory?.name}</p>
+                    <CourseSlider courses={catalogPageData?.differentCategory?.courses}/>
                 </div>
 
                 {/* Scetion-3  */}
                 <div className='flex flex-col gap-4'>
-                    <p className='text-3xl'>Frequently bought together</p>
+                    <p className='text-3xl'>Frequently bought</p>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-14 '>
+                        {
+                            catalogPageData?.mostSellingCourses?.slice(0,4)?.map((course) => (
+                                <div key={course._id}>
+                                    <CatalogCourseCard course={course} height="h-[230px] md:h-[300px]"/>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
         </div>
     </div>
