@@ -1,12 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { buyCourse } from '../../../../services/operations/studentFeaturesAPI';
 
 const RenderTotalAmount = () => {
 
-    const {total} = useSelector((state) => state.cart)
+    const {total,cart} = useSelector((state) => state.cart);
+    const {token} = useSelector((state) => state.auth);
+    const {user} = useSelector((state) => state.profile);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleBuyCourse = () => {
-        
+        const courses = cart.map((course) => course._id);
+        buyCourse(token, courses, user, navigate, dispatch)
     }
 
   return (

@@ -22,6 +22,28 @@ export const fetchCourseCategories = async() => {
     }
 }
 
+//fetch single course data
+export const fetchCourseDetails = async(courseId) => {
+    const toastId = toast.loading("Loading...");
+    let result = null;
+    try {
+        const response = await apiConnector("POST",courseEndpoints.COURSE_DETAILS_API, {courseId})
+
+        if (!response.data.success){
+            throw new Error(response?.data?.message)
+        }
+
+        result = response?.data;
+
+    } catch (error) {
+        console.log("FETCH COURSE DEATAILS API ERROR...", error);
+        toast.error("Error in loading details");
+    }
+
+    toast.dismiss(toastId);
+    return result;
+}
+
 //add course 
 
 export const addCourseDetails = async(data,token) => {

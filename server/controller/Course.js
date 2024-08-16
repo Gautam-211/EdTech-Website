@@ -139,16 +139,20 @@ exports.getCourseDetails = async(req,res) => {
         const course = await Course.findById(courseId)
                                                 .populate({
                                                     path: "instructor",
+                                                    model:"User",
                                                     populate: {
                                                         path: "additionalDetails",
+                                                        model:"Profile"
                                                     },
                                                 })
                                                 .populate("category")
                                                 .populate("ratingAndReviews")
                                                 .populate({
                                                     path: "courseContent",
+                                                    model:"Section",
                                                     populate: {
                                                         path: "subSection",
+                                                        model:"SubSection"
                                                     },
                                                     })
                                                 .exec();
@@ -160,10 +164,20 @@ exports.getCourseDetails = async(req,res) => {
             })
         }
 
+        let totalDurationInSeconds = 0
+        course.courseContent.forEach((content) => {
+            content.subSection.forEach((subSection) => {
+                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                totalDurationInSeconds += timeDurationInSeconds
+            })
+        })
+
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+
         return res.status(200).json({
             success:true,
             message:"Course details fetched successfully",
-            data:course
+            data:{courseDetails: course , totalDuration}
         })
         
     } catch (error) {
