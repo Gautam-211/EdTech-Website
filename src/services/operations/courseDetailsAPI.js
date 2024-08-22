@@ -332,3 +332,53 @@ export const deleteSubSection = async(data,token) => {
     return result;
 }
 
+// create rating
+export const createRating  = async(data, token) => {
+
+    const toastId = toast.loading("Loading...");
+    let success = false;
+    try {
+        const response = await apiConnector("POST", courseEndpoints.CREATE_RATING_API, data, {
+            Authorization:`Bearer ${token}`
+        })
+        console.log("CREATE RATING API RESPONSE ...", response);
+
+        if (!response?.data?.success) {
+            throw new Error(response?.data?.message)
+          }
+          toast.success("Rating Created")
+          success = true
+        
+    } catch (error) {
+        success = false;
+        console.log("CREATE RATING API ERROR............", error)
+        toast.error(error.message);
+    }
+    toast.dismiss(toastId)
+    return success
+}
+
+export const markLectureAsCompleted = async(data, token) => {
+    let result = null;
+    const toastId = toast.loading("Loading...");
+    try {
+        console.log("Hello")
+        const response = await apiConnector("POST", courseEndpoints.LECTURE_COMPLETION_API, data, {
+            Authorization:`Bearer ${token}`
+        })
+        console.log("MARK LECTURE AS COMPLETE API RESPONSE...", response);
+
+        if(!response?.data?.success){
+            throw new Error(response?.data?.message)
+        }
+        toast.success("Lecture completed");
+        result = true;
+        
+    } catch (error) {
+        console.log("MARK LECTURE AS COMPLETED...", error);
+        toast.error(error.message);
+        result = false
+    }
+    toast.dismiss(toastId);
+    return result;
+}

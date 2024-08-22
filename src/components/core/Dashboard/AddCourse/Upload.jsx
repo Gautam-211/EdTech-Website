@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import { FiUploadCloud } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
-import "video-react/dist/video-react.css"
-import { Player } from 'video-react';
+import ReactPlayer from 'react-player';
 
 const Upload = ({name, label, register, errors, setValue, video=false, viewData=null, editData=null}) => {
 
@@ -65,7 +64,7 @@ const Upload = ({name, label, register, errors, setValue, video=false, viewData=
                 className="h-full w-full rounded-md object-cover"
               />
             ) : (
-              <Player aspectRatio="16:9" playsInline src={previewSource} />
+              <ReactPlayer width="100%" height={"60%"} controls={true} playsInline url={previewSource} />
             )}
             {!viewData && (
               <button

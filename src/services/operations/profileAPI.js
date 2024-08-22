@@ -28,3 +28,27 @@ export async function getUserEnrolledCourses(token){
         }
     
 }
+
+export const getIntructorDashboardData = async(token) => {
+    const toastId = toast.loading("Loading...");
+    let result = [];
+    try {
+        const response = await apiConnector("GET", profileEndpoints.GET_INSTRUCTOR_DATA_API, null, {
+            Authorization : `Bearer ${token}`
+        })
+        console.log("INSTRUCTOR DATA API response...", response);
+
+        if(!response?.data?.success){
+            throw new Error(response?.data?.message);
+        }
+
+        result = response?.data?.data
+        
+    } catch (error) {
+        toast.error(error.message);
+        console.log("INSTRUCTOR DATA API response...", error)
+    }
+
+    toast.dismiss(toastId);
+    return result;
+}

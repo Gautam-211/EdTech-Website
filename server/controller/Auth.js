@@ -247,22 +247,15 @@ exports.login = async(req,res) => {
 exports.changePassword = async(req,res) => {
     try {
         //fetch data from the body
-        const {oldPassword,newPassword,confirmNewPassword} = req.body;
+        const {oldPassword,newPassword} = req.body;
         const userId = req.user.id
 
         //perform validation on data
 
-        if (!oldPassword || !newPassword || !confirmNewPassword){
+        if (!oldPassword || !newPassword ){
             return res.status(403).json({
                 success:false,
                 message:"Fill all the required fields"
-            })
-        }
-
-        if (newPassword !== confirmNewPassword){
-            return res.status(400).json({
-                success:false,
-                message:"New passsword and confirm New password does not match"
             })
         }
 
@@ -270,7 +263,8 @@ exports.changePassword = async(req,res) => {
         const user = await User.findById(userId);
 
         if (await bcrypt.compare(oldPassword, user.password)){
-            const updatedUser = await User.findByIdAndUpdate(userId,{password:newPassword})
+            const newHashedPassword = await bcrypt.hash(newPassword, 10);
+            const updatedUser = await User.findByIdAndUpdate(userId,{password:newHashedPassword})
 
             //send confirmation  email
             try {

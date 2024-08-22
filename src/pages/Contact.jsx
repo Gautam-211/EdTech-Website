@@ -3,9 +3,11 @@ import { HiChatBubbleLeftRight } from 'react-icons/hi2'
 import ContactUsForm from '../components/ContactPage/ContactUsForm'
 import { BiWorld } from 'react-icons/bi'
 import { IoCall } from 'react-icons/io5'
+import Footer from '../components/common/Footer'
 
 const Contact = () => {
   return (
+    <>
     <div className='w-11/12 max-w-maxContent mx-auto mt-16 flex flex-col lg:flex-row justify-between gap-y-6 pt-16
      items-center lg:items-start'>
         
@@ -47,7 +49,7 @@ const Contact = () => {
         </div>
 
         <div className='w-full lg:w-[55%] flex flex-col gap-y-6 border-richblack-600 border-[1px] rounded-2xl 
-        px-6 md:px-8 lg:px-12 py-10'>
+        px-6 md:px-8 lg:px-12 py-10 mb-[3rem]'>
             <div className='flex flex-col'>
                 <h1 className='text-white text-4xl font-semibold'>Got a Idea? We've got the skills. Let's team up</h1>
                 <p>Tell us more about yourself and what you're got in mind.</p>
@@ -55,7 +57,13 @@ const Contact = () => {
             <ContactUsForm/>
         </div>
 
+        
+
+
     </div>
+
+    <Footer/>
+    </>
   )
 }
 

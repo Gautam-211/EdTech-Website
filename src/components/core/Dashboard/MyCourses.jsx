@@ -27,7 +27,7 @@ const MyCourses = () => {
   return (
     <div className='text-white'>
         <div className='flex items-center justify-between pb-[1rem] border-b-[1px] border-richblack-600'>
-            <h1 className='text-4xl'>My Courses</h1>
+            <h1 className='text-3xl'>My Courses</h1>
             <IconBtn text={"Add Course"} onclick={() => navigate("/dashboard/add-course")}
                 customClasses={"flex items-center gap-1"}>
                 <AiOutlinePlus/>

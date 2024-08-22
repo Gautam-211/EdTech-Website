@@ -22,6 +22,10 @@ import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails/VideoDetails";
+import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import Settings from "./components/core/Dashboard/Settings";
 
 function App() {
 
@@ -75,7 +79,7 @@ function App() {
           }>
 
                   <Route path="dashboard/my-profile" element={<MyProfile/>}/>
-                  <Route path="dashboard/settings" element/>
+                  <Route path="dashboard/settings" element={<Settings/>}/>
                   {
                     user?.accountType===ACCOUNT_TYPE.STUDENT && (
                           <>
@@ -90,16 +94,35 @@ function App() {
                             <Route path="dashboard/my-courses" element={<MyCourses/>}/>
                             <Route path="dashboard/add-course" element={<AddCourse/>}/>
                             <Route path="dashboard/edit-course/:courseId" element={<EditCourse/>}/>
+                            <Route path="dashboard/instructor" element={<Instructor/>}/>
                       </>
                     )
                   }
 
+          </Route>
+
+          <Route element={
+            <PrivateRoute>
+                <ViewCourse/>
+            </PrivateRoute>
+          }>
+
+            {
+                user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                    <>
+                        <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                        element={<VideoDetails/>}></Route>
+                    </>
+                )
+            }
+             
           </Route>
         
 
                                            
             <Route path="*" element={<Error/>}/>
         </Routes>
+
     </div>
   );
 }

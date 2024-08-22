@@ -108,7 +108,7 @@ const Navbar = () => {
 
                 {
                     user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-                        <Link to={"/dashboard/cart"} className='relative text-white text-2xl'>
+                        <Link to={"/dashboard/cart"} className='relative text-white text-2xl max-sm:hidden'>
                             <AiOutlineShoppingCart/>
                             {
                                 totalItems>0 && (

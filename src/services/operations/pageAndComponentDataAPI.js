@@ -1,6 +1,6 @@
 import toast from "react-hot-toast"
 import { apiConnector } from "../apiconnector";
-import { catalogData } from "../apis";
+import { catalogData, ratingsEndpoints } from "../apis";
 
 
 export const getCatalogPageData = async(categoryId) => {
@@ -24,5 +24,24 @@ export const getCatalogPageData = async(categoryId) => {
     }
 
     toast.dismiss(toastId);
+    return result;
+}
+
+export const fetchAllReviews = async() => {
+    let result = [];
+    try {
+        const response = await apiConnector("GET", ratingsEndpoints.REVIEWS_DETAILS_API)
+
+        console.log("FETCH ALL REVIEWS API RESPONSE...", response);
+        
+        if(!response.data.success){
+            throw new Error(response?.data?.message);
+        }
+
+        result = response?.data?.data;
+        
+    } catch (error) {
+        console.log("FETCH ALL REVIEWS API RESPONSE...", error);
+    }
     return result;
 }

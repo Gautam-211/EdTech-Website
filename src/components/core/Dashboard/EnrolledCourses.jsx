@@ -4,17 +4,19 @@ import {  useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Spinner from '../../common/Spinner/Spinner';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { useNavigate } from 'react-router-dom';
 
 const EnrolledCourses = () => {
 
     const {token} = useSelector((state) => state.auth)
     const [enrolledCourses, setEnrolledCourses] = useState(null);
+    const navigate = useNavigate();
 
     const getEnrolledCourses = async() => {
         try {
             const response = await getUserEnrolledCourses(token);
             setEnrolledCourses(response);
-
+            console.log(response)
         } catch (error) {
             toast.error("Unable to fetch enrolled courses");
         }
@@ -26,7 +28,7 @@ const EnrolledCourses = () => {
 
   return (
     <div className='text-white relative'>
-        <h1 className='text-4xl mb-[1rem]'>Enrolled Courses</h1>
+        <h1 className='text-3xl mb-[1rem]'>Enrolled Courses</h1>
         {
             !enrolledCourses?(
                 <div className='absolute top-[35vh] left-[25vw]'>
@@ -44,7 +46,10 @@ const EnrolledCourses = () => {
                     {
                         enrolledCourses.map((course) => (
                             <div key={course._id} className='py-4 px-3 flex border-t-[1px] border-richblack-600 items-center'>
-                                <div className='flex items-center gap-x-4 w-[50%]'>
+                                <div className='flex items-center gap-x-4 w-[50%] cursor-pointer'
+                                onClick={() => navigate(
+                                    `/view-course/${course?._id}/section/${course?.courseContent[0]?._id}/sub-section/${course?.courseContent[0]?.subSection[0]?._id}`
+                                )}>
                                     <img src={course.thumbnail} alt="" className='w-[3.5rem] aspect-square rounded-xl'/>
                                     <div>
                                         <p>{course.courseName}</p>
@@ -57,9 +62,9 @@ const EnrolledCourses = () => {
                                 </div>
 
                                 <div className='w-[30%] flex flex-col gap-y-1'>
-                                    <p>Progress: 60</p>
+                                    <p>Progress: {course?.progressPercentage}</p>
                                     <ProgressBar
-                                        completed={50}
+                                        completed={course?.progressPercentage}
                                         height='8px'
                                         width='80%'
                                         isLabelVisible={false}

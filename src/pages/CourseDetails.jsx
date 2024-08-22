@@ -292,7 +292,7 @@ const CourseDetails = () => {
                     <div className='w-full flex flex-col gap-3 mb-[1rem]'>
                         <p className='text-3xl'>Author</p>
                         <div className='flex items-center gap-3'>
-                            <img src={user.image} alt="" className='w-[4rem] aspect-square rounded-full'/>
+                            <img src={instructor?.image} alt="" className='w-[4rem] aspect-square rounded-full'/>
                             <p className='text-lg'>{`${instructor.firstName} ${instructor.lastName}`}</p>
                             <p>{instructor?.additionalDetails?.about}</p>
                         </div>

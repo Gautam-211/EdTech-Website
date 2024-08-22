@@ -7,6 +7,8 @@ import Quote from '../components/core/AboutPage/Quote';
 import FoundingStory from '../assets/Images/FoundingStory.png'
 import LearningGrid from '../components/core/AboutPage/LearningGrid';
 import ContactUsSection from '../components/core/AboutPage/ContactUsSection';
+import ReviewSlider from '../components/common/ReviewSlider';
+import Footer from '../components/common/Footer';
 
 const statsData = [
     {
@@ -140,10 +142,17 @@ const About = () => {
         </section>
 
         {/* Section-5  */}
-        <section className='w-full bg-richblack-900 flex flex-col gap-y-5'>
+        <section className='w-full bg-richblack-900 flex flex-col gap-y-5 pb-[2rem]'>
             <LearningGrid/>
             <ContactUsSection/>
+            <div className='w-11/12 max-w-maxContent mx-auto mt-[6rem] flex flex-col'>
+                <p className='w-full text-center text-3xl text-white font-semibold mb-[2rem]'>Reviews from other Learners</p>
+                <ReviewSlider/>
+            </div>
         </section>
+
+        <Footer/>
+        
     </div>
   )
 }

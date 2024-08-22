@@ -38,12 +38,13 @@ exports.createRating = async(req,res) => {
         }
 
         //check if user has already reviewed
-        const existingReview = await RatingAndReview.find({course:courseId , user:userId});
+        const existingReview = await RatingAndReview.findOne({course:courseId , user:userId});
+        // console.log(existingReview);
 
         if (existingReview){
             return res.status(400).json({
                 success:false,
-                message:"You have already reviewd to the course"
+                message:"You have already reviewed to the course"
             })
         }
 

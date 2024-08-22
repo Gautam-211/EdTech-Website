@@ -9,7 +9,7 @@ const Cart = () => {
 
   return (
     <div className='text-white'>
-        <h1 className='text-4xl mb-[3rem]'>Your Cart</h1>
+        <h1 className='text-3xl mb-[3rem]'>Your Cart</h1>
         <p className='text-base text-richblack-300 border-b-[1px] border-richblack-500 pb-3 mb-3'>{totalItems} courses in Cart</p>
 
         {
