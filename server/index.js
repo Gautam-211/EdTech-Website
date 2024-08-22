@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin:["https://study-notion-international.netlify.app/","https://ed-tech-website-ghku.vercel.app/"],
+        origin:"https://study-notion-international.netlify.app/",
         credentials:true
     })
 )
