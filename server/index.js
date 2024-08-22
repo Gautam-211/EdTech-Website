@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin:"https://study-notion-international.netlify.app/",
+        origin:"*",
         credentials:true
     })
 )
