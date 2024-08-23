@@ -1,6 +1,7 @@
 const {instance} = require("../config/razorpay");
 const Course = require("../models/Course");
 const User = require('../models/User');
+const crypto = require("crypto")
 const CourseProgress = require("../models/CourseProgress")
 const mailSender = require('../utils/mailSender');
 const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail");
@@ -8,105 +9,78 @@ const { default: mongoose } = require("mongoose");
 const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail");
 require("dotenv").config();
 
-exports.capturePayment = async(req, res) => {
-    try {
+
+exports.capturePayment = async(req,res) => {
+    
+        //get courseID and userID
         const {courses} = req.body;
         const userId = req.user.id;
 
-        if(courses.length === 0){
-            return res.status(400).json({
+        //peform validation
+        if (courses.length === 0){
+            return res.status(401).json({
                 success:false,
-                message:"Nou courses in the cart"
+                message:"No Courses are added in the cart"
             })
         }
 
-        await enrollStudents(courses, userId, res);
+        let totalAmount = 0;
 
-        return res.status(200).json({
-            success:true,
-            message:"Courses in the cart purchased successfull"
-        })
-        
-    } catch (error) {
-        return res.status(500).json({
-            success:false,
-            message:"Internal server error at test buy route",
-            error:error.message
-        })
-    }
-}
+        for (const course_id of courses){
+            let course;
+            try {
+                course = await Course.findById(course_id);
+                if(!course){
+                    return res.status(400).json({
+                        success:false,
+                        message:"Could not find the course"
+                    })
+                }
 
-// exports.capturePayment = async(req,res) => {
-    
-//         //get courseID and userID
-//         const {courses} = req.body;
-//         const userId = req.user.id;
+                // const uid = new mongoose.Types.ObjectId(userId);
+                if(course.studentsEnrolled.includes(userId)){
+                    return res.status(400).json({
+                        success:false,
+                        message:`You have already purchased the course with courseId ${course_id}`
+                    })
+                }
 
-//         //peform validation
-//         if (courses.length === 0){
-//             return res.status(401).json({
-//                 success:false,
-//                 message:"No Courses are added in the cart"
-//             })
-//         }
-
-//         let totalAmount = 0;
-
-//         for (const course_id of courses){
-//             let course;
-//             try {
-//                 course = await Course.findById(course_id);
-//                 if(!course){
-//                     return res.status(400).json({
-//                         success:false,
-//                         message:"Could not find the course"
-//                     })
-//                 }
-
-//                 // const uid = new mongoose.Types.ObjectId(userId);
-//                 if(course.studentsEnrolled.includes(userId)){
-//                     return res.status(400).json({
-//                         success:false,
-//                         message:`You have already purchased the course with courseId ${course_id}`
-//                     })
-//                 }
-
-//                 totalAmount += course.price;
+                totalAmount += course.price;
                 
-//             } catch (error) {
-//                 return res.status(500).json({
-//                     success:false,
-//                     message:"Internal server error",
-//                     error:error.message
-//                 })
-//             }
-//         }
+            } catch (error) {
+                return res.status(500).json({
+                    success:false,
+                    message:"Internal server error",
+                    error:error.message
+                })
+            }
+        }
 
-//         // create order
-//         const options= {
-//             amount : totalAmount*100,  //multiplied by 100 because the actual amount comes after this multiplication
-//             currency:"INR",
-//             receipt : Math.random(Date.now()).toString(),
-//         }
+        // create order
+        const options= {
+            amount : totalAmount*100,  //multiplied by 100 because the actual amount comes after this multiplication
+            currency:"INR",
+            receipt : Math.random(Date.now()).toString(),
+        }
 
-//         try {
-//             //initiate the payment
-//             const paymentResponse = await instance.orders.create(options);
+        try {
+            //initiate the payment
+            const paymentResponse = await instance.orders.create(options);
 
-//             return res.status(200).json({
-//                 success:true,
-//                 data:paymentResponse
-//             })
+            return res.status(200).json({
+                success:true,
+                data:paymentResponse
+            })
             
-//         } catch (error) {
-//             return res.status(500).json({
-//                 success:false,
-//                 message:"error in initiating payment",
-//                 error:error.message
-//             })
-//         }
+        } catch (error) {
+            return res.status(500).json({
+                success:false,
+                message:"error in initiating payment",
+                error:error.message
+            })
+        }
 
-// }
+}
 
 exports.verifyPayment = async(req,res) => {
     try {

@@ -257,7 +257,7 @@ const CourseDetails = () => {
                     border-[1px] border-richblack-600' >
                         {
                             courseContent?.map((section) => (
-                                <>
+                                <div  key={section?._id}>
                                     <div className='w-full flex items-center justify-between p-4 bg-richblack-700
                                     border-[1px] border-richblack-600 cursor-pointer'
                                     onClick={() => handleActive(section._id)}>
@@ -273,7 +273,8 @@ const CourseDetails = () => {
                                     {
                                         section?.subSection.map((lecture) => (
                                             <div className={`w-full flex items-center gap-2 transition-all duration-200 ease-linear
-                                            ${isActive.includes(section._id)?"p-4 border-[1px] border-richblack-600":"h-[0px]"} `}>
+                                            ${isActive.includes(section._id)?"p-4 border-[1px] border-richblack-600":"h-[0px]"} `}
+                                            key={lecture?._id}>
                                                 {
                                                     isActive.includes(section._id) && 
                                                     <>
@@ -284,7 +285,7 @@ const CourseDetails = () => {
                                             </div>
                                         ))
                                     }
-                                </>
+                                </div>
                             ))
                         }
                     </div>

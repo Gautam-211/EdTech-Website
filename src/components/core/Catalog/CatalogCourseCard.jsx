@@ -19,7 +19,7 @@ const CatalogCourseCard = ({course, height}) => {
             <p className='text-richblack-25'>{course.courseName}</p>
             <p>{`${course.instructor.firstName} ${course.instructor.lastName}`}</p>
             <div className='flex items-center gap-1'>
-                <span>{avgReviewCount}</span>
+                <span>{`${avgReviewCount || 0}`}</span>
                 <RatingStars Review_Count={avgReviewCount}/>
                 <span>{`(${course?.ratingAndReviews?.length})`}</span>
             </div>
