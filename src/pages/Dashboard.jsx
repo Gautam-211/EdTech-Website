@@ -24,7 +24,7 @@ const Dashboard = () => {
         <Sidebar open={open} setOpen={setOpen}/> 
 
         <div className={`text-yellow-50 text-lg lg:hidden mt-[6.3rem] flex items-center gap-x-2 w-11/12 mx-auto
-        ${open?"translate-x-[62%]":""} transition-all duration-300 ease-in-out`}
+        ${open?"translate-x-[62%]":""} transition-all duration-300 ease-in-out z-50`}
         onClick={() => setOpen((prev) => !prev)}>
             {open?"Close Menu":"Open Menu"} 
             <FaArrowRight className={`${open?"rotate-180":""} transition-all duration-300 ease-in`}/>

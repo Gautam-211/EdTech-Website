@@ -25,10 +25,10 @@ const Sidebar = ({open}) => {
     }
 
   return (
-        <div className={`flex flex-col min-w-[250px] border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800
-        py-10  mt-[3.5rem] max-lg:fixed ${open?"w-1/2 left-0 translate-x-0":"max-lg:-translate-x-full"}
+        <div className={`flex flex-col max-w-[250px] border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800
+        py-10  mt-[3.5rem] max-lg:fixed ${open?" left-0 translate-x-0":"max-lg:-translate-x-full"}
         transition-all duration-300 ease-in-out z-40`}>
-            <div className='flex flex-col text-white '>
+            <div className='flex flex-col text-white max-w-[250px]'>
                 {
                     sidebarLinks.map((link) => {
                         if(link.type && link.type !== user?.accountType) return null
@@ -39,7 +39,7 @@ const Sidebar = ({open}) => {
 
             <div className='mx-auto my-6 h-[1px] w-10/12 bg-richblack-600'></div>
 
-            <div className='flex flex-col text-white'>
+            <div className='flex flex-col text-white max-w-[250px]'>
                 <SidebarLink link={{name:"Settings",path:"dashboard/settings"}} iconName={"VscSettingsGear"}/>
 
                 <button className='flex items-center text-richblack-300 text-lg hover:text-white transition-all
